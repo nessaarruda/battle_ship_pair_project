@@ -7,6 +7,7 @@ class ShipTest < Minitest::Test
   def setup
     @cruiser = Ship.new("Cruiser", 3)
   end
+
   def test_it_exists_and_has_attributes
     assert_equal "Cruiser", @cruiser.name
     assert_equal 3, @cruiser.length
@@ -26,5 +27,4 @@ class ShipTest < Minitest::Test
     @cruiser.hit
     assert_equal true, @cruiser.sunk?
   end
-
 end
