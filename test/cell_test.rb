@@ -12,6 +12,5 @@ class CellTest < Minitest::Test
 
   def test_it_exists_and_has_attributes
     assert_equal "B4", @cell.coordinate
-    asser_equal nil, @cell.ship
   end
 end
