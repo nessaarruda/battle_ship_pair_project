@@ -9,6 +9,9 @@ class BoardTest < Minitest::Test
     @board = Board.new
     @cruiser = Ship.new("Cruiser", 3)
     @submarine = Ship.new("Submarine", 2)
+    @cell_1 = @board.cells["A1"]
+    @cell_2 = @board.cells["A2"]
+    @cell_3 = @board.cells["A3"]
   end
 
   def test_it_exists_and_has_attributes
@@ -44,5 +47,19 @@ class BoardTest < Minitest::Test
   def test_it_is_not_diagonal
     assert_equal false, @board.valid_placement?(@cruiser,  ["A1", "B2", "C3"])
     assert_equal false, @board.valid_placement?(@submarine, ["C2", "D3"])
+  end
+
+  def test_it_can_place_a_ship
+    # Because a Ship occupies more than one cell, multiple Cells will contain
+    # the same ship
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+    assert_equal @cruiser, @cell_1.ship
+    assert_equal @cruiser, @cell_2.ship
+    assert_equal @cruiser, @cell_3.ship
+  end
+
+  def test_it_is_not_overlapping
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+    assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2"])
   end
 end
