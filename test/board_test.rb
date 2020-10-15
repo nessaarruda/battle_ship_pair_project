@@ -62,4 +62,11 @@ class BoardTest < Minitest::Test
     @board.place(@cruiser, ["A1", "A2", "A3"])
     assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2"])
   end
-end
+
+  def test_it_can_render_a_board
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+    expected = "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n"
+    assert_equal expected, @board.render
+  end
+
+  end
