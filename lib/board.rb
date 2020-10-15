@@ -36,14 +36,21 @@ class Board
     numbers_range.to_a
   end
 
+  def valid_length?(ship, coordinate)
+    coordinate.count == ship.length
+  end
+
   def valid_placement?(ship, coordinate)
-    if letters_array(coordinate).uniq.length == 1 && @numbers == numbers_array(coordinate) && coordinate.count == ship.length
-      true
-    elsif letters_array(coordinate).uniq.length != 1 && @letters == letters_array(coordinate) && @numbers.one? && coordinate.count == ship.length
-      true
-    else
-      false
-    end
+    #use boolean
+
+      (letters_array(coordinate).uniq.length == 1 && @numbers == numbers_array(coordinate)) &&
+      valid_length?(ship, coordinate)
+
+      (letters_array(coordinate).uniq.length != 1 && @letters == letters_array(coordinate)) &&
+      @numbers.one? &&
+      valid_length?(ship, coordinate)
+
+
   end
 
   def place(ship, coordinate)
