@@ -32,6 +32,7 @@ Schedule Expectations (When are we available to work together and individually? 
 - Monday's at 5pm V has mentor meeting
 - Friday's at 5pm Cydnee has mentor meeting
 - Wednesday end 7pm (make sure to start 4:30 this day)
+- Thursday's at 5pm V has buddy meeting 
 
 Communication Expectations (How and how often will we communicate? How do we keep lines of communication open? How will we make decisions as a team? How will we communicate about our emotional and mental well-being with each other?):
 
@@ -81,6 +82,6 @@ Cydnee will set up
 
 Day 1 Agenda:
 
-Complete iteration 1 
+Complete iteration 1
 
 Additional Notes:

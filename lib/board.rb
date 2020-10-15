@@ -3,11 +3,13 @@ class Board
 
   def initialize
     @cells = generate_cells
+    @numbers = []
+    @letters = []
   end
 
   def generate_cells
     cells_hash = {}
-    coordinates = ["A1", "A2", "A3", "A4", "B1", "B2", "B3", "B4", "C1", "C2", "C3", "C4", "D1", "D2", "D3", "D4"]
+    coordinates = ["A1", "A2", "A3", "A4", "B1", "B2", "B3", "B4","C1", "C2", "C3", "C4", "D1", "D2", "D3", "D4"]
     coordinates.each do |coordinate|
       cells_hash[coordinate] = Cell.new(coordinate)
     end
@@ -18,18 +20,26 @@ class Board
     @cells.keys.include?(coordinate)
   end
 
-  def valid_placement?(ship, coordinate)
-    letters = []
-    numbers = []
+  def letters_array(coordinate)
     coordinate.each do |letter|
-      letters << letter[0]
-      numbers << letter[-1]
+      @letters << letter[0]
     end
-    numbers_range = numbers[0]..numbers[-1]
-    letters_range = letters[0]..letters[-1]
-    if letters_range.to_a.uniq.length == 1 && numbers == numbers_range.to_a && coordinate.count == ship.length
+    letters_range = @letters[0]..@letters[-1]
+    letters_range.to_a
+  end
+
+  def numbers_array(coordinate)
+    coordinate.each do |number|
+      @numbers << number[-1]
+    end
+    numbers_range = @numbers[0]..@numbers[-1]
+    numbers_range.to_a
+  end
+
+  def valid_placement?(ship, coordinate)
+    if letters_array(coordinate).uniq.length == 1 && @numbers == numbers_array(coordinate) && coordinate.count == ship.length
       true
-    elsif letters_range.to_a.uniq.length != 1 && letters == letters_range.to_a && numbers.one? && coordinate.count == ship.length
+    elsif letters_array(coordinate).uniq.length != 1 && @letters == letters_array(coordinate) && @numbers.one? && coordinate.count == ship.length
       true
     else
       false
@@ -44,7 +54,7 @@ class Board
     end
   end
 
-  def render(reveal_ship = true)
+  def render(reveal_ship = @ship)
     "  1 2 3 4 \n" +
     "A #{@cells["A1"].render(true)} #{@cells["A2"].render(true)} #{@cells["A3"].render(true)} #{@cells["A4"].render(true)} \n" +
     "B #{@cells["B1"].render(true)} #{@cells["B2"].render(true)} #{@cells["B3"].render(true)} #{@cells["B4"].render(true)} \n" +
