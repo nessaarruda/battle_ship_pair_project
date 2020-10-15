@@ -71,4 +71,16 @@ class BoardTest < Minitest::Test
     assert_equal expected, @board.render(true)
   end
 
+  def test_letters_array
+    assert_equal ["A"], @board.letters_array(["A1", "A2", "A3"])
+  end
+
+  def test_numbers_array
+    assert_equal ["1", "2", "3"], @board.numbers_array(["A1", "A2", "A3"])
+  end
+
+  def test_length_of_ship_is_valid
+    assert_equal true, @board.valid_length?(@cruiser, ["A1", "A2", "A3"])
+  end
+
 end
