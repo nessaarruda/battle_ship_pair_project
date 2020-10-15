@@ -37,5 +37,7 @@ class Battle
     end
   end
 
-
+  def computer_ship_placement
+    
+  end
 end

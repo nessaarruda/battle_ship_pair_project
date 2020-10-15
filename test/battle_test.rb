@@ -12,6 +12,12 @@ class BattleTest < Minitest::Test
 
   def test_it_exists_and_has_attributes
     assert_instance_of Battle, @battle
+    assert_instance_of Ship, @battle.user_submarine
+    assert_instance_of Ship, @battle.computer_submarine
+    assert_instance_of Ship, @battle.user_cruiser
+    assert_instance_of Ship, @battle.computer_cruiser
+    assert_instance_of Board, @battle.user_board
+    assert_instance_of Board, @battle.computer_board
   end
 
   def test_it_states_a_welcome_message
@@ -19,4 +25,6 @@ class BattleTest < Minitest::Test
     "Enter p to play. Enter q to quit."
     assert_equal expected, @battle.welcome_message
   end
+
+
 end
