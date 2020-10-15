@@ -18,4 +18,8 @@ class Battle
     @computer_submarine = Ship.new("Submarine", 2)
   end
 
+  def welcome_message
+    "Welcome to BATTLESHIP\n" +
+    "Enter p to play. Enter q to quit."
+  end
 end
