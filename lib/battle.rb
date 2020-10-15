@@ -9,6 +9,7 @@ class Battle
               :computer_board,
               :computer_cruiser,
               :computer_submarine
+
   def initialize
     @user_board         = Board.new
     @user_cruiser       = Ship.new("Cruiser", 3)
@@ -22,4 +23,10 @@ class Battle
     "Welcome to BATTLESHIP\n" +
     "Enter p to play. Enter q to quit."
   end
+
+  def go_to_battle
+    puts welcome_message
+  end
+
+
 end
