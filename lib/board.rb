@@ -24,6 +24,12 @@ class Board
     end
   end
 
+  def numbers(coordinate)
+    coordinate.map do |number|
+      number[-1]
+    end
+  end
+
   def valid_placement?(ship, coordinate)
     # all_letters_or_all_numbers?(ship, coordinate)
     # # if letters_array(coordinate).uniq.length == 1 && ONE LETTER
