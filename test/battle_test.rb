@@ -26,5 +26,9 @@ class BattleTest < Minitest::Test
     assert_equal expected, @battle.welcome_message
   end
 
+  def test_it_is_random_and_valid_coordinates
+    assert_equal 3, @battle.computer_ship_placement.random.count
+  end
+
 
 end

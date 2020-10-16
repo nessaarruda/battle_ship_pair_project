@@ -17,6 +17,7 @@ class Battle
     @computer_board     = Board.new
     @computer_cruiser   = Ship.new('Cruiser', 3)
     @computer_submarine = Ship.new('Submarine', 2)
+    @all_coordinates    = @computer_board.cells.keys
   end
 
   def welcome_message
@@ -38,6 +39,13 @@ class Battle
   end
 
   def computer_ship_placement
-    
+    # loop coordinates- sample method for random coordinates that comply with valid placement
+    # place method to place ships
+    sample = @all_coordinates.sample(3)
+    require "pry"; binding.pry
+    until @computer_board.valid_placement?(@computer_cruiser, sample)
+      sample = @all_coordinates.sample(3)
+    end
+    @computer_board.place(@computer_cruiser, sample)
   end
 end

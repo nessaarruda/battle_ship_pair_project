@@ -3,8 +3,8 @@ class Board
 
   def initialize
     @cells = generate_cells
-    @numbers = []
-    @letters = []
+    # @numbers = []
+    # @letters = []
   end
 
   def generate_cells
@@ -20,39 +20,25 @@ class Board
     @cells.keys.include?(coordinate)
   end
 
-  def letters_array(coordinate)
-    coordinate.each do |letter|
-      @letters << letter[0]
-    end
-    letters_range = @letters[0]..@letters[-1]
-    letters_range.to_a
-  end
-
-  def numbers_array(coordinate)
-    coordinate.each do |number|
-      @numbers << number[-1]
-    end
-    numbers_range = @numbers[0]..@numbers[-1]
-    numbers_range.to_a
-  end
-
-  def valid_length?(ship, coordinate)
-    coordinate.count == ship.length
-  end
 
   def valid_placement?(ship, coordinate)
-
-    if letters_array(coordinate).uniq.length == 1 && @numbers == numbers_array(coordinate) && valid_length?(ship, coordinate)
-      true
-    elsif letters_array(coordinate).uniq.length != 1 && @letters == letters_array(coordinate) && @numbers.one? && valid_length?(ship, coordinate)
-      true
-    else
-      false
-    end
+    all_letters_or_all_numbers?(ship, coordinate)
+    # # if letters_array(coordinate).uniq.length == 1 && ONE LETTER
+    #    # @numbers == numbers_array(coordinate) &&
+    #     valid_length?(ship, coordinate) && valid_coordinate?(coordinate)
+    #   true
+    # # elsif letters_array(coordinate).uniq.length != 1  && ONE NUM
+    #  @letters == letters_array(coordinate) && @numbers.one?
+    #  && valid_length?(ship, coordinate) && valid_coordinate?(coordinate)
+    # #   true
+    # # else
+    # #   false
+    # # end
   end
 
   def place(ship, coordinate)
     if valid_placement?(ship, coordinate)
+      require "pry"; binding.pry
       coordinate.each do |coordinate|
         @cells[coordinate].place_ship(ship)
       end
