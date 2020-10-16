@@ -42,7 +42,6 @@ class Battle
     # loop coordinates- sample method for random coordinates that comply with valid placement
     # place method to place ships
     sample = @all_coordinates.sample(3)
-    require "pry"; binding.pry
     until @computer_board.valid_placement?(@computer_cruiser, sample)
       sample = @all_coordinates.sample(3)
     end

@@ -27,7 +27,7 @@ class BattleTest < Minitest::Test
   end
 
   def test_it_is_random_and_valid_coordinates
-    assert_equal 3, @battle.computer_ship_placement.random.count
+    assert_equal 3, @battle.computer_ship_placement.count
   end
 
 

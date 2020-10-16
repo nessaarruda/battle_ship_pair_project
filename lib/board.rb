@@ -18,49 +18,48 @@ class Board
     @cells.keys.include?(coordinate)
   end
 
-  def letters(coordinate)
-    coordinate.map do |letter|
+  def letters(coordinates)
+    coordinates.map do |letter|
       letter[0]
     end
   end
 
-  def numbers(coordinate)
-    coordinate.map do |number|
+  def numbers(coordinates)
+    coordinates.map do |number|
       number[-1]
     end
   end
 
-  def letters_range(coordinate)
-    (letters(coordinate)[0]..letters(coordinate)[-1]).to_a
+  def letters_range(coordinates)
+    (letters(coordinates)[0]..letters(coordinates)[-1]).to_a
   end
 
-  def numbers_range(coordinate)
-    (numbers(coordinate)[0]..numbers(coordinate)[-1]).to_a
+  def numbers_range(coordinates)
+    (numbers(coordinates)[0]..numbers(coordinates)[-1]).to_a
   end
 
-  def valid_length?(ship, coordinate)
-    coordinate.count == ship.length
+  def valid_length?(ship, coordinates)
+    coordinates.count == ship.length
   end
 
-  def one_letter?(coordinate)
-    letters(coordinate).uniq.length == 1
+  def one_letter?(coordinates)
+    letters(coordinates).uniq.length == 1
   end
 
-  def one_number?(coordinate)
-    numbers(coordinate).uniq.length == 1
+  def one_number?(coordinates)
+    numbers(coordinates).uniq.length == 1
   end
 
-  def valid_placement?(ship, coordinate)
-    (one_letter?(coordinate) && numbers(coordinate) == numbers_range(coordinate) &&
-    valid_length?(ship, coordinate) && valid_coordinate?(coordinate)) ||
-    (one_number?(coordinate) && letters(coordinate) == letters_range(coordinate) &&
-    valid_length?(ship, coordinate) && valid_coordinate?(coordinate))
+  def valid_placement?(ship, coordinates)
+    (one_letter?(coordinates) && numbers(coordinates) == numbers_range(coordinates) &&
+    valid_length?(ship, coordinates) && coordinates.all? {|coordinate| valid_coordinate?(coordinate)}) ||
+    (one_number?(coordinates) && letters(coordinates) == letters_range(coordinates) &&
+    valid_length?(ship, coordinates) && coordinates.all? {|coordinate| valid_coordinate?(coordinate)})
   end
 
-  def place(ship, coordinate)
-    if valid_placement?(ship, coordinate)
-      require "pry"; binding.pry
-      coordinate.each do |coordinate|
+  def place(ship, coordinates)
+    if valid_placement?(ship, coordinates)
+      coordinates.each do |coordinate|
         @cells[coordinate].place_ship(ship)
       end
     end
