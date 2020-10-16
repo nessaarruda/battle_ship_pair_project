@@ -39,7 +39,8 @@ class Battle
   end
 
   def generate_random_coordinates(ship)
-    if ship == computer_cruiser || ship == @user_cruiser
+    # require "pry"; binding.pry
+    if ship.name == @computer_cruiser.name || ship.name == @user_cruiser.name
       3
     else
       2
