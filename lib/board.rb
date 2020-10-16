@@ -42,6 +42,8 @@ class Board
     coordinate.count == ship.length
   end
 
+
+
   def valid_placement?(ship, coordinate)
     # all_letters_or_all_numbers?(ship, coordinate)
     # # if letters_array(coordinate).uniq.length == 1 && ONE LETTER

@@ -12,6 +12,7 @@ class BoardTest < Minitest::Test
     @cell_1 = @board.cells["A1"]
     @cell_2 = @board.cells["A2"]
     @cell_3 = @board.cells["A3"]
+    @coordinate1 = ["A1", "A2", "A3"]
   end
 
   def test_it_exists_and_has_attributes
@@ -43,9 +44,7 @@ class BoardTest < Minitest::Test
   end
 
   def test_it_can_find_all_numbers
-    coordinate = ["A1", "A2", "A3"]
-
-    assert_equal ['1', '2', '3'], @board.numbers(coordinate)
+    assert_equal ['1', '2', '3'], @board.numbers(@coordinate1)
 
     coordinate = ["D1", "D2"]
 
@@ -59,13 +58,15 @@ class BoardTest < Minitest::Test
   end
 
   def test_it_can_find_numbers_range
-    coordinate = ["A1", "A2", "A3"]
-
-    assert_equal ['1', '2', '3'], @board.numbers_range(coordinate)
+    assert_equal ['1', '2', '3'], @board.numbers_range(@coordinate1)
   end
 
   def test_length_of_ship_is_valid
     assert_equal true, @board.valid_length?(@cruiser, ["A1", "A2", "A3"])
+  end
+
+  def test_coordinates_are_the_same_letter
+    assert_equal true, @board.one_letter?(@coordinate1)
   end
 
   # def test_coordinate_count_same_as_ship_length
