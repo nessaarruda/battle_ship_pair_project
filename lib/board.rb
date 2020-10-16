@@ -42,6 +42,10 @@ class Board
     coordinate.count == ship.length
   end
 
+  def one_letter?(coordinate)
+    letters_range(coordinate).uniq.length == 1
+  end
+
 
 
   def valid_placement?(ship, coordinate)
