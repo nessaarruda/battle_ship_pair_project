@@ -70,8 +70,8 @@ class BoardTest < Minitest::Test
   end
 
   def test_coordinates_are_the_same_number
-    coordinate = ["D1", "D2"]
-    
+    coordinate = ["C2", "D2"]
+
     assert_equal true, @board.one_number?(coordinate)
   end
 

@@ -43,7 +43,11 @@ class Board
   end
 
   def one_letter?(coordinate)
-    letters_range(coordinate).uniq.length == 1
+    letters(coordinate).uniq.length == 1
+  end
+
+  def one_number?(coordinate)
+    numbers(coordinate).uniq.length == 1
   end
 
 
