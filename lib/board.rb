@@ -38,6 +38,10 @@ class Board
     (numbers(coordinate)[0]..numbers(coordinate)[-1]).to_a
   end
 
+  def valid_length?(ship, coordinate)
+    coordinate.count == ship.length
+  end
+
   def valid_placement?(ship, coordinate)
     # all_letters_or_all_numbers?(ship, coordinate)
     # # if letters_array(coordinate).uniq.length == 1 && ONE LETTER
