@@ -50,21 +50,11 @@ class Board
     numbers(coordinate).uniq.length == 1
   end
 
-
-
   def valid_placement?(ship, coordinate)
-    # all_letters_or_all_numbers?(ship, coordinate)
-    # # if letters_array(coordinate).uniq.length == 1 && ONE LETTER
-    #    # @numbers == numbers_array(coordinate) &&
-    #     valid_length?(ship, coordinate) && valid_coordinate?(coordinate)
-    #   true
-    # # elsif letters_array(coordinate).uniq.length != 1  && ONE NUM
-    #  @letters == letters_array(coordinate) && @numbers.one?
-    #  && valid_length?(ship, coordinate) && valid_coordinate?(coordinate)
-    # #   true
-    # # else
-    # #   false
-    # # end
+    (one_letter?(coordinate) && numbers(coordinate) == numbers_range(coordinate) &&
+    valid_length?(ship, coordinate) && valid_coordinate?(coordinate)) ||
+    (one_number?(coordinate) && letters(coordinate) == letters_range(coordinate) &&
+    valid_length?(ship, coordinate) && valid_coordinate?(coordinate))
   end
 
   def place(ship, coordinate)

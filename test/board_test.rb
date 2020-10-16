@@ -75,42 +75,42 @@ class BoardTest < Minitest::Test
     assert_equal true, @board.one_number?(coordinate)
   end
 
-  # def test_coordinate_count_same_as_ship_length
-  #   assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2"])
-  #   assert_equal false, @board.valid_placement?(@submarine, ["A2", "A3", "A4"])
-  # end
-  #
-  # def test_coordinates_are_consecutive
-  #   assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2", "A4"])
-  #   assert_equal false, @board.valid_placement?(@submarine, ["A1", "C1"])
-  #   assert_equal false, @board.valid_placement?(@cruiser, ["A3", "A2", "A1"])
-  #   assert_equal false, @board.valid_placement?(@submarine, ["C1", "B1"])
-  # end
-  #
-  # def test_it_is_not_diagonal
-  #   assert_equal false, @board.valid_placement?(@cruiser,  ["A1", "B2", "C3"])
-  #   assert_equal false, @board.valid_placement?(@submarine, ["C2", "D3"])
-  # end
-  #
-  # def test_it_is_not_overlapping
-  #   @board.place(@cruiser, ["A1", "A2", "A3"])
-  #   assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2"])
-  # end
-  #
-  # def test_it_can_place_a_ship
-  #   # Because a Ship occupies more than one cell, multiple Cells will contain
-  #   # the same ship
-  #   @board.place(@cruiser, ["A1", "A2", "A3"])
-  #   assert_equal @cruiser, @cell_1.ship
-  #   assert_equal @cruiser, @cell_2.ship
-  #   assert_equal @cruiser, @cell_3.ship
-  # end
+  def test_coordinate_count_same_as_ship_length
+    assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2"])
+    assert_equal false, @board.valid_placement?(@submarine, ["A2", "A3", "A4"])
+  end
 
-  # def test_it_can_render_a_board
-  #   expected = "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n"
-  #   assert_equal expected, @board.render
-  #   expected = "  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n"
-  #   @board.place(@cruiser, ["A1", "A2", "A3"])
-  #   assert_equal expected, @board.render(true)
-  # end
+  def test_coordinates_are_consecutive
+    assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2", "A4"])
+    assert_equal false, @board.valid_placement?(@submarine, ["A1", "C1"])
+    assert_equal false, @board.valid_placement?(@cruiser, ["A3", "A2", "A1"])
+    assert_equal false, @board.valid_placement?(@submarine, ["C1", "B1"])
+  end
+
+  def test_it_is_not_diagonal
+    assert_equal false, @board.valid_placement?(@cruiser,  ["A1", "B2", "C3"])
+    assert_equal false, @board.valid_placement?(@submarine, ["C2", "D3"])
+  end
+
+  def test_it_is_not_overlapping
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+    assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2"])
+  end
+
+  def test_it_can_place_a_ship
+    # Because a Ship occupies more than one cell, multiple Cells will contain
+    # the same ship
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+    assert_equal @cruiser, @cell_1.ship
+    assert_equal @cruiser, @cell_2.ship
+    assert_equal @cruiser, @cell_3.ship
+  end
+
+  def test_it_can_render_a_board
+    expected = "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n"
+    assert_equal expected, @board.render
+    expected = "  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n"
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+    assert_equal expected, @board.render(true)
+  end
 end
