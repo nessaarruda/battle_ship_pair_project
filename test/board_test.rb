@@ -21,6 +21,7 @@ class BoardTest < Minitest::Test
 
   def test_cells_are_being_created
     expected = ["A1", "A2", "A3", "A4", "B1", "B2", "B3", "B4", "C1", "C2", "C3", "C4", "D1", "D2", "D3", "D4"]
+
     assert_equal expected, @board.cells.keys
     assert_equal 16, @board.cells.count
   end
@@ -94,13 +95,14 @@ class BoardTest < Minitest::Test
 
   def test_it_is_not_overlapping
     @board.place(@cruiser, ["A1", "A2", "A3"])
+
     assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2"])
   end
 
   def test_it_can_place_a_ship
-    # Because a Ship occupies more than one cell, multiple Cells will contain
-    # the same ship
+  # A Ship occupies more than one cell, so multiple Cells will contain the same ship
     @board.place(@cruiser, ["A1", "A2", "A3"])
+
     assert_equal @cruiser, @cell_1.ship
     assert_equal @cruiser, @cell_2.ship
     assert_equal @cruiser, @cell_3.ship
@@ -108,9 +110,13 @@ class BoardTest < Minitest::Test
 
   def test_it_can_render_a_board
     expected = "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n"
+
     assert_equal expected, @board.render
+
     expected = "  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n"
+
     @board.place(@cruiser, ["A1", "A2", "A3"])
+
     assert_equal expected, @board.render(true)
   end
 end
