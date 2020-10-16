@@ -29,13 +29,44 @@ class Battle
     puts welcome_message
     user_response = gets.chomp.downcase
     if user_response == 'p'
-      #do something
+      start_game
     elsif user_response == 'q'
       exit
     else
     puts "That is not a valid choice, please input 'p' or 'q'"
     self.go_to_battle
     end
+  end
+
+  def start_game
+    computer_ship_placement
+    user_ship_placement
+
+    # 2. place playership using user input, do a loop to take turns,
+    # 3. print message when game is over
+  end
+
+  def user_ship_placement
+    puts "I have laid out my ships on the grid."
+    puts "You now need to lay out your two ships."
+    puts "The Cruiser is three units long and the Submarine is two units long.\n"
+    puts "Keep in mind ships cannot be placed diagonally"
+    puts @user_board.render(true)
+    puts "Enter the coordinates for the Cruiser (3 spaces):"
+    users_coordinates = gets.chomp.upcase.split(" ")
+    until @user_board.valid_placement?(@user_cruiser, users_coordinates)
+      puts "These coordinates are invalid, please try again"
+      users_coordinates = gets.chomp.upcase.split(" ")
+    end
+    @user_board.place(@user_cruiser, @users_coordinates)
+    puts @user_board.render(true)
+    puts "Enter the coordinates for the Submarine (2 spaces):"
+    users_coordinates = gets.chomp.upcase.split(" ")
+    until @user_board.valid_placement?(@user_submarine, users_coordinates)
+      puts "These coordinates are invalid, please try again"
+      users_coordinates = gets.chomp.upcase.split(" ")
+    end
+    @user_board.place(@user_submarine, @users_coordinates)
   end
 
   def generate_random_coordinates(ship)
@@ -53,7 +84,7 @@ class Battle
       sample = generate_random_coordinates(@computer_cruiser)
     end
     @computer_board.place(@computer_cruiser, sample)
-    
+
     until @computer_board.valid_placement?(@computer_submarine, generate_random_coordinates(@computer_submarine))
       sample = generate_random_coordinates(@computer_submarine)
     end
