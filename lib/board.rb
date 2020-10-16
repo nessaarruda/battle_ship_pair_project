@@ -3,8 +3,6 @@ class Board
 
   def initialize
     @cells = generate_cells
-    # @numbers = []
-    # @letters = []
   end
 
   def generate_cells
@@ -20,9 +18,14 @@ class Board
     @cells.keys.include?(coordinate)
   end
 
+  def letters(coordinate)
+    coordinate.map do |letter|
+      letter[0]
+    end
+  end
 
   def valid_placement?(ship, coordinate)
-    all_letters_or_all_numbers?(ship, coordinate)
+    # all_letters_or_all_numbers?(ship, coordinate)
     # # if letters_array(coordinate).uniq.length == 1 && ONE LETTER
     #    # @numbers == numbers_array(coordinate) &&
     #     valid_length?(ship, coordinate) && valid_coordinate?(coordinate)
