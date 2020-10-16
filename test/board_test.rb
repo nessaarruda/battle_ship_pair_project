@@ -55,7 +55,7 @@ class BoardTest < Minitest::Test
   def test_it_can_find_letters_range
     coordinate = ["A1", "A2", "A3"]
 
-    assert_equal ['A'..'A'], @board.letters_range(coordinate)
+    assert_equal ['A'], @board.letters_range(coordinate)
   end
 
   # def test_letters_array
