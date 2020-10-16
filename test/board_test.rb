@@ -69,6 +69,12 @@ class BoardTest < Minitest::Test
     assert_equal true, @board.one_letter?(@coordinate1)
   end
 
+  def test_coordinates_are_the_same_number
+    coordinate = ["D1", "D2"]
+    
+    assert_equal true, @board.one_number?(coordinate)
+  end
+
   # def test_coordinate_count_same_as_ship_length
   #   assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2"])
   #   assert_equal false, @board.valid_placement?(@submarine, ["A2", "A3", "A4"])
