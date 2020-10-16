@@ -49,11 +49,14 @@ class Battle
   end
 
   def computer_ship_placement
-    # loop coordinates- sample method for random coordinates that comply with valid placement
-    # place method to place ships
     until @computer_board.valid_placement?(@computer_cruiser, generate_random_coordinates(@computer_cruiser))
       sample = generate_random_coordinates(@computer_cruiser)
     end
     @computer_board.place(@computer_cruiser, sample)
+    
+    until @computer_board.valid_placement?(@computer_submarine, generate_random_coordinates(@computer_submarine))
+      sample = generate_random_coordinates(@computer_submarine)
+    end
+    @computer_board.place(@computer_submarine, sample)
   end
 end
