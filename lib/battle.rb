@@ -41,18 +41,18 @@ class Battle
   def generate_random_coordinates(ship)
     # require "pry"; binding.pry
     if ship.name == @computer_cruiser.name || ship.name == @user_cruiser.name
-      3
+      @all_coordinates.sample(3)
     else
-      2
+      @all_coordinates.sample(2)
+
     end
   end
 
   def computer_ship_placement
     # loop coordinates- sample method for random coordinates that comply with valid placement
     # place method to place ships
-    sample = @all_coordinates.sample(generate_random_coordinates(@computer_cruiser))
-    until @computer_board.valid_placement?(@computer_cruiser, sample)
-      sample = @all_coordinates.sample(3)
+    until @computer_board.valid_placement?(@computer_cruiser, generate_random_coordinates(@computer_cruiser))
+      sample = generate_random_coordinates(@computer_cruiser)
     end
     @computer_board.place(@computer_cruiser, sample)
   end

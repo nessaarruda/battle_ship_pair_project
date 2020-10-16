@@ -26,14 +26,10 @@ class BattleTest < Minitest::Test
     assert_equal expected, @battle.welcome_message
   end
 
-  def test_it_is_random_and_valid_coordinates
-    assert_equal 3, @battle.computer_ship_placement.count
-  end
-
   def test_it_can_generate_sample_for_both_ships
     ship = Ship.new("Cruiser", 3)
-    assert_equal 3, @battle.generate_random_coordinates(ship)
+    assert_equal 3, @battle.generate_random_coordinates(ship).count
     ship = Ship.new("Submarine", 2)
-    assert_equal 2, @battle.generate_random_coordinates(ship)
+    assert_equal 2, @battle.generate_random_coordinates(ship).count 
   end
 end
