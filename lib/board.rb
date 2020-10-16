@@ -3,8 +3,6 @@ class Board
 
   def initialize
     @cells = generate_cells
-    @numbers = []
-    @letters = []
   end
 
   def generate_cells
@@ -20,40 +18,61 @@ class Board
     @cells.keys.include?(coordinate)
   end
 
-  def letters_array(coordinate)
-    coordinate.each do |letter|
-      @letters << letter[0]
-    end
-    letters_range = @letters[0]..@letters[-1]
-    letters_range.to_a
-  end
-
-  def numbers_array(coordinate)
-    coordinate.each do |number|
-      @numbers << number[-1]
-    end
-    numbers_range = @numbers[0]..@numbers[-1]
-    numbers_range.to_a
-  end
-
-  def valid_length?(ship, coordinate)
-    coordinate.count == ship.length
-  end
-
-  def valid_placement?(ship, coordinate)
-
-    if letters_array(coordinate).uniq.length == 1 && @numbers == numbers_array(coordinate) && valid_length?(ship, coordinate)
-      true
-    elsif letters_array(coordinate).uniq.length != 1 && @letters == letters_array(coordinate) && @numbers.one? && valid_length?(ship, coordinate)
-      true
-    else
-      false
+  def letters(coordinates)
+    coordinates.map do |letter|
+      letter[0]
     end
   end
 
-  def place(ship, coordinate)
-    if valid_placement?(ship, coordinate)
-      coordinate.each do |coordinate|
+  def numbers(coordinates)
+    coordinates.map do |number|
+      number[-1]
+    end
+  end
+
+  def letters_range(coordinates)
+    (letters(coordinates)[0]..letters(coordinates)[-1]).to_a
+  end
+
+  def numbers_range(coordinates)
+    (numbers(coordinates)[0]..numbers(coordinates)[-1]).to_a
+  end
+
+  def valid_length?(ship, coordinates)
+    coordinates.count == ship.length
+  end
+
+  def one_letter?(coordinates)
+    letters(coordinates).uniq.length == 1
+  end
+
+  def one_number?(coordinates)
+    numbers(coordinates).uniq.length == 1
+  end
+
+  def valid_length_and_coordinate?(ship, coordinates)
+    valid_length?(ship, coordinates) &&
+    coordinates.all? {|coordinate| valid_coordinate?(coordinate)}
+  end
+
+  def has_same_letters_and_consecutive_numbers?(coordinates)
+    one_letter?(coordinates) && numbers(coordinates) == numbers_range(coordinates)
+  end
+
+  def has_same_numbers_and_consecutive_letters?(coordinates)
+    one_number?(coordinates) && letters(coordinates) == letters_range(coordinates)
+  end
+
+  def valid_placement?(ship, coordinates)
+    (has_same_letters_and_consecutive_numbers?(coordinates) &&
+    valid_length_and_coordinate?(ship, coordinates)) ||
+    (has_same_numbers_and_consecutive_letters?(coordinates) &&
+    valid_length_and_coordinate(coordinates))
+  end
+
+  def place(ship, coordinates)
+    if valid_placement?(ship, coordinates)
+      coordinates.each do |coordinate|
         @cells[coordinate].place_ship(ship)
       end
     end
