@@ -42,6 +42,16 @@ class BoardTest < Minitest::Test
     assert_equal ['C', 'D'], @board.letters(coordinate)
   end
 
+  def test_it_can_find_all_numbers
+    coordinate = ["A1", "A2", "A3"]
+
+    assert_equal ['1', '2', '3'], @board.numbers(coordinate)
+
+    coordinate = ["D1", "D2"]
+
+    assert_equal ['1', '2'], @board.numbers(coordinate)
+  end
+
   # def test_letters_array
   #   assert_equal ["A"], @board.letters_array(["A1", "A2", "A3"])
   # end
