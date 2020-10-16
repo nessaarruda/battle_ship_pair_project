@@ -76,6 +76,16 @@ class BoardTest < Minitest::Test
     assert_equal true, @board.one_number?(coordinate)
   end
 
+  def test_it_has_same_letters_and_consecutive_numbers
+    assert_equal true, @board.has_same_letters_and_consecutive_numbers?(@coordinate1)
+    assert_equal false, @board.has_same_letters_and_consecutive_numbers?(["A1", "B2"])
+  end
+
+  def test_it_has_same_numbers_and_consecutive_letters
+    assert_equal true, @board.has_same_numbers_and_consecutive_letters?(["A1", "B1", "C1"])
+    assert_equal false, @board.has_same_numbers_and_consecutive_letters?(["A1", "C1"])
+  end
+
   def test_coordinate_count_same_as_ship_length
     assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2"])
     assert_equal false, @board.valid_placement?(@submarine, ["A2", "A3", "A4"])

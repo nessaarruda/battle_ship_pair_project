@@ -50,11 +50,24 @@ class Board
     numbers(coordinates).uniq.length == 1
   end
 
+  def valid_length_and_coordinate?(ship, coordinates)
+    valid_length?(ship, coordinates) &&
+    coordinates.all? {|coordinate| valid_coordinate?(coordinate)}
+  end
+
+  def has_same_letters_and_consecutive_numbers?(coordinates)
+    one_letter?(coordinates) && numbers(coordinates) == numbers_range(coordinates)
+  end
+
+  def has_same_numbers_and_consecutive_letters?(coordinates)
+    one_number?(coordinates) && letters(coordinates) == letters_range(coordinates)
+  end
+
   def valid_placement?(ship, coordinates)
-    (one_letter?(coordinates) && numbers(coordinates) == numbers_range(coordinates) &&
-    valid_length?(ship, coordinates) && coordinates.all? {|coordinate| valid_coordinate?(coordinate)}) ||
-    (one_number?(coordinates) && letters(coordinates) == letters_range(coordinates) &&
-    valid_length?(ship, coordinates) && coordinates.all? {|coordinate| valid_coordinate?(coordinate)})
+    (has_same_letters_and_consecutive_numbers?(coordinates) &&
+    valid_length_and_coordinate?(ship, coordinates)) ||
+    (has_same_numbers_and_consecutive_letters?(coordinates) &&
+    valid_length_and_coordinate(coordinates))
   end
 
   def place(ship, coordinates)
