@@ -30,5 +30,10 @@ class BattleTest < Minitest::Test
     assert_equal 3, @battle.computer_ship_placement.count
   end
 
-
+  def test_it_can_generate_sample_for_both_ships
+    ship = Ship.new("cruiser", 3)
+    assert_equal 3, @battle.generate_random_coordinates(ship).count
+    ship = Ship.new("submarine", 2)
+    assert_equal 2, @battle.generate_random_coordinates(ship).count
+  end
 end

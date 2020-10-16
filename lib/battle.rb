@@ -38,10 +38,18 @@ class Battle
     end
   end
 
+  def generate_random_coordinates(ship)
+    if ship == computer_cruiser || ship == @user_cruiser
+      3
+    else
+      2
+    end
+  end
+
   def computer_ship_placement
     # loop coordinates- sample method for random coordinates that comply with valid placement
     # place method to place ships
-    sample = @all_coordinates.sample(3)
+    sample = @all_coordinates.sample(generate_random_coordinates(@computer_cruiser))
     until @computer_board.valid_placement?(@computer_cruiser, sample)
       sample = @all_coordinates.sample(3)
     end
