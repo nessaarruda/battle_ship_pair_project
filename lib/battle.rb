@@ -60,18 +60,22 @@ class Battle
     puts "Enter the coordinates for the Cruiser (3 spaces):"
   end
 
+  def render_user_board_and_instructions_submarine
+    puts @user_board.render(true)
+    puts "Enter the coordinates for the Submarine (2 spaces):"
+  end
+
   def user_ship_placement
     user_instructions
     render_user_board_and_instructions_cruiser
     user_coordinates = gets.chomp.upcase.split(" ")
     until @user_board.valid_placement?(@user_cruiser, user_coordinates)
       puts "These coordinates are invalid, please try again"
-
       user_coordinates = gets.chomp.upcase.split(" ")
     end
+    require "pry"; binding.pry
     @user_board.place(@user_cruiser, @user_coordinates)
-    puts @user_board.render(true)
-    puts "Enter the coordinates for the Submarine (2 spaces):"
+    render_user_board_and_instructions_submarine
     user_coordinates = gets.chomp.upcase.split(" ")
     until @user_board.valid_placement?(@user_submarine, user_coordinates)
       puts "These coordinates are invalid, please try again"
