@@ -73,7 +73,6 @@ class Board
     valid_length_and_coordinate?(ship, coordinates)) ||
     (has_same_numbers_and_consecutive_letters?(coordinates) &&
     valid_length_and_coordinate?(ship, coordinates))
-
   end
 
   def place(ship, coordinates)
