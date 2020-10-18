@@ -29,7 +29,7 @@ class Battle
     puts welcome_message
     user_response = gets.chomp.downcase
     if user_response == 'p'
-      #do something
+      start_game
     elsif user_response == 'q'
       exit
     else
@@ -38,13 +38,58 @@ class Battle
     end
   end
 
+  def start_game
+    computer_ship_placement
+    user_ship_placement
+
+    # 2. place playership using user input, do a loop to take turns,
+    # 3. print message when game is over
+  end
+
+  def user_ship_placement
+    # require "pry"; binding.pry
+    puts "I have laid out my ships on the grid."
+    puts "You now need to lay out your two ships."
+    puts "The Cruiser is three units long and the Submarine is two units long.\n"
+    puts "Keep in mind ships cannot be placed diagonally"
+    puts @user_board.render(true)
+    puts "Enter the coordinates for the Cruiser (3 spaces):"
+    user_coordinates = gets.chomp.upcase.split(" ")
+    until @user_board.valid_placement?(@user_cruiser, user_coordinates)
+      puts "These coordinates are invalid, please try again"
+
+      user_coordinates = gets.chomp.upcase.split(" ")
+    end
+    @user_board.place(@user_cruiser, @user_coordinates)
+    puts @user_board.render(true)
+    puts "Enter the coordinates for the Submarine (2 spaces):"
+    user_coordinates = gets.chomp.upcase.split(" ")
+    until @user_board.valid_placement?(@user_submarine, user_coordinates)
+      puts "These coordinates are invalid, please try again"
+      user_coordinates = gets.chomp.upcase.split(" ")
+    end
+    @user_board.place(@user_submarine, user_coordinates)
+  end
+
+  def generate_random_coordinates(ship)
+    # require "pry"; binding.pry
+    if ship.name == @computer_cruiser.name || ship.name == @user_cruiser.name
+      @all_coordinates.sample(3)
+    else
+      @all_coordinates.sample(2)
+
+    end
+  end
+
   def computer_ship_placement
-    # loop coordinates- sample method for random coordinates that comply with valid placement
-    # place method to place ships
-    sample = @all_coordinates.sample(3)
-    until @computer_board.valid_placement?(@computer_cruiser, sample)
-      sample = @all_coordinates.sample(3)
+    until @computer_board.valid_placement?(@computer_cruiser, generate_random_coordinates(@computer_cruiser))
+      sample = generate_random_coordinates(@computer_cruiser)
     end
     @computer_board.place(@computer_cruiser, sample)
+
+    until @computer_board.valid_placement?(@computer_submarine, generate_random_coordinates(@computer_submarine))
+      sample = generate_random_coordinates(@computer_submarine)
+    end
+    @computer_board.place(@computer_submarine, sample)
   end
 end
