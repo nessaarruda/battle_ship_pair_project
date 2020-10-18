@@ -46,12 +46,17 @@ class Battle
     # 3. print message when game is over
   end
 
-  def user_ship_placement
-    # require "pry"; binding.pry
+  def user_instructions
+    puts "#{"-" * 40}"
     puts "I have laid out my ships on the grid."
     puts "You now need to lay out your two ships."
     puts "The Cruiser is three units long and the Submarine is two units long.\n"
     puts "Keep in mind ships cannot be placed diagonally"
+    puts "#{"-" * 40}"
+  end
+
+  def user_ship_placement
+    user_instructions
     puts @user_board.render(true)
     puts "Enter the coordinates for the Cruiser (3 spaces):"
     user_coordinates = gets.chomp.upcase.split(" ")
@@ -74,9 +79,9 @@ class Battle
   def generate_random_coordinates(ship)
     # require "pry"; binding.pry
     if ship.name == @computer_cruiser.name || ship.name == @user_cruiser.name
-      @all_coordinates.sample(3)
+      @computer_board.cells.keys.sample(3)
     else
-      @all_coordinates.sample(2)
+      @computer_board.cells.keys.sample(2)
 
     end
   end

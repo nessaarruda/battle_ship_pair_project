@@ -19,7 +19,7 @@ class Board
   end
 
   def letters(coordinates)
-    require "pry"; binding.pry
+    # require "pry"; binding.pry
     coordinates.map do |letter|
       letter[0]
     end
