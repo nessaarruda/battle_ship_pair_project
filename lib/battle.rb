@@ -65,16 +65,25 @@ class Battle
     puts "Enter the coordinates for the Submarine (2 spaces):"
   end
 
-  def user_ship_placement
-    user_instructions
-    render_user_board_and_instructions_cruiser
+  def generate_random_coordinates_user_cruiser
     user_coordinates = gets.chomp.upcase.split(" ")
     until @user_board.valid_placement?(@user_cruiser, user_coordinates)
       puts "These coordinates are invalid, please try again"
       user_coordinates = gets.chomp.upcase.split(" ")
     end
-    require "pry"; binding.pry
-    @user_board.place(@user_cruiser, @user_coordinates)
+    @user_board.place(@user_cruiser, user_coordinates)
+  end
+
+  def user_ship_placement
+    user_instructions
+    render_user_board_and_instructions_cruiser
+    generate_random_coordinates_user_cruiser
+    # user_coordinates = gets.chomp.upcase.split(" ")
+    # until @user_board.valid_placement?(@user_cruiser, user_coordinates)
+    #   puts "These coordinates are invalid, please try again"
+    #   user_coordinates = gets.chomp.upcase.split(" ")
+    # end
+    # @user_board.place(@user_cruiser, @user_coordinates)
     render_user_board_and_instructions_submarine
     user_coordinates = gets.chomp.upcase.split(" ")
     until @user_board.valid_placement?(@user_submarine, user_coordinates)
@@ -85,7 +94,6 @@ class Battle
   end
 
   def generate_random_coordinates(ship)
-    # require "pry"; binding.pry
     if ship.name == @computer_cruiser.name || ship.name == @user_cruiser.name
       @computer_board.cells.keys.sample(3)
     else

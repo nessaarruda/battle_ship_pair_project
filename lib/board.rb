@@ -18,8 +18,14 @@ class Board
     @cells.keys.include?(coordinate)
   end
 
+  def valid_placement?(ship, coordinates)
+    (has_same_letters_and_consecutive_numbers?(coordinates) &&
+    valid_length_and_coordinate?(ship, coordinates)) ||
+    (has_same_numbers_and_consecutive_letters?(coordinates) &&
+    valid_length_and_coordinate?(ship, coordinates))
+  end
+
   def letters(coordinates)
-    # require "pry"; binding.pry
     coordinates.map do |letter|
       letter[0]
     end
@@ -68,17 +74,9 @@ class Board
     coordinates.all? {|coordinate| valid_coordinate?(coordinate)}
   end
 
-  def valid_placement?(ship, coordinates)
-    (has_same_letters_and_consecutive_numbers?(coordinates) &&
-    valid_length_and_coordinate?(ship, coordinates)) ||
-    (has_same_numbers_and_consecutive_letters?(coordinates) &&
-    valid_length_and_coordinate?(ship, coordinates))
-  end
-
   def place(ship, coordinates)
     if valid_placement?(ship, coordinates)
       coordinates.each do |coordinate|
-        require "pry"; binding.pry
         @cells[coordinate].place_ship(ship)
       end
     end
