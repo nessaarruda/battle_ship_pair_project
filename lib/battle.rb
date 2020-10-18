@@ -47,26 +47,28 @@ class Battle
   end
 
   def user_ship_placement
+    # require "pry"; binding.pry
     puts "I have laid out my ships on the grid."
     puts "You now need to lay out your two ships."
     puts "The Cruiser is three units long and the Submarine is two units long.\n"
     puts "Keep in mind ships cannot be placed diagonally"
     puts @user_board.render(true)
     puts "Enter the coordinates for the Cruiser (3 spaces):"
-    users_coordinates = gets.chomp.upcase.split(" ")
-    until @user_board.valid_placement?(@user_cruiser, users_coordinates)
+    user_coordinates = gets.chomp.upcase.split(" ")
+    until @user_board.valid_placement?(@user_cruiser, user_coordinates)
       puts "These coordinates are invalid, please try again"
-      users_coordinates = gets.chomp.upcase.split(" ")
+
+      user_coordinates = gets.chomp.upcase.split(" ")
     end
-    @user_board.place(@user_cruiser, @users_coordinates)
+    @user_board.place(@user_cruiser, @user_coordinates)
     puts @user_board.render(true)
     puts "Enter the coordinates for the Submarine (2 spaces):"
-    users_coordinates = gets.chomp.upcase.split(" ")
-    until @user_board.valid_placement?(@user_submarine, users_coordinates)
+    user_coordinates = gets.chomp.upcase.split(" ")
+    until @user_board.valid_placement?(@user_submarine, user_coordinates)
       puts "These coordinates are invalid, please try again"
-      users_coordinates = gets.chomp.upcase.split(" ")
+      user_coordinates = gets.chomp.upcase.split(" ")
     end
-    @user_board.place(@user_submarine, @users_coordinates)
+    @user_board.place(@user_submarine, user_coordinates)
   end
 
   def generate_random_coordinates(ship)

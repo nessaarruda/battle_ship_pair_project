@@ -19,6 +19,7 @@ class Board
   end
 
   def letters(coordinates)
+    require "pry"; binding.pry
     coordinates.map do |letter|
       letter[0]
     end
@@ -67,7 +68,7 @@ class Board
     (has_same_letters_and_consecutive_numbers?(coordinates) &&
     valid_length_and_coordinate?(ship, coordinates)) ||
     (has_same_numbers_and_consecutive_letters?(coordinates) &&
-    valid_length_and_coordinate?(ship, coordinates)) 
+    valid_length_and_coordinate?(ship, coordinates))
 
   end
 
