@@ -47,12 +47,12 @@ class Battle
   end
 
   def user_instructions
-    puts "#{"-" * 40}"
+    puts "#{"-" * 60}"
     puts "I have laid out my ships on the grid."
     puts "You now need to lay out your two ships."
     puts "The Cruiser is three units long and the Submarine is two units long.\n"
     puts "Keep in mind ships cannot be placed diagonally"
-    puts "#{"-" * 40}"
+    puts "#{"-" * 60}"
   end
 
   def user_ship_placement
