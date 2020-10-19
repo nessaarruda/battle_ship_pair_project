@@ -36,4 +36,5 @@ class BattleTest < Minitest::Test
   def test_it_starts_the_game
     assert_equal 3, @battle.start_game
   end
+
 end
