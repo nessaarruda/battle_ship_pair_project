@@ -18,8 +18,14 @@ class Board
     @cells.keys.include?(coordinate)
   end
 
+  def valid_placement?(ship, coordinates)
+    (has_same_letters_and_consecutive_numbers?(coordinates) &&
+    valid_length_and_coordinate?(ship, coordinates)) ||
+    (has_same_numbers_and_consecutive_letters?(coordinates) &&
+    valid_length_and_coordinate?(ship, coordinates))
+  end
+
   def letters(coordinates)
-    require "pry"; binding.pry
     coordinates.map do |letter|
       letter[0]
     end
@@ -51,11 +57,6 @@ class Board
     numbers(coordinates).uniq.length == 1
   end
 
-  def valid_length_and_coordinate?(ship, coordinates)
-    valid_length?(ship, coordinates) &&
-    coordinates.all? {|coordinate| valid_coordinate?(coordinate)}
-  end
-
   def has_same_letters_and_consecutive_numbers?(coordinates)
     one_letter?(coordinates) && numbers(coordinates) == numbers_range(coordinates)
   end
@@ -64,12 +65,13 @@ class Board
     one_number?(coordinates) && letters(coordinates) == letters_range(coordinates)
   end
 
-  def valid_placement?(ship, coordinates)
-    (has_same_letters_and_consecutive_numbers?(coordinates) &&
-    valid_length_and_coordinate?(ship, coordinates)) ||
-    (has_same_numbers_and_consecutive_letters?(coordinates) &&
-    valid_length_and_coordinate?(ship, coordinates))
+  def is_overlapping?(coordinate)
+    coordinate.all? {|coordinate| @cells[coordinate].empty?}
+  end
 
+  def valid_length_and_coordinate?(ship, coordinates)
+    valid_length?(ship, coordinates) && is_overlapping?(coordinates) &&
+    coordinates.all? {|coordinate| valid_coordinate?(coordinate)}
   end
 
   def place(ship, coordinates)

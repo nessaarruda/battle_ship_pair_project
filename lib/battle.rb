@@ -17,7 +17,6 @@ class Battle
     @computer_board     = Board.new
     @computer_cruiser   = Ship.new('Cruiser', 3)
     @computer_submarine = Ship.new('Submarine', 2)
-    @all_coordinates    = @computer_board.cells.keys
   end
 
   def welcome_message
@@ -41,55 +40,69 @@ class Battle
   def start_game
     computer_ship_placement
     user_ship_placement
+  end
 
-    # 2. place playership using user input, do a loop to take turns,
-    # 3. print message when game is over
+  def computer_ship_placement
+    until @computer_board.valid_placement?(@computer_cruiser, generate_random_coordinates_computer(@computer_cruiser))
+      sample = generate_random_coordinates_computer(@computer_cruiser)
+    end
+    @computer_board.place(@computer_cruiser, sample)
+    until @computer_board.valid_placement?(@computer_submarine, generate_random_coordinates_computer(@computer_submarine))
+      sample = generate_random_coordinates_computer(@computer_submarine)
+    end
+    @computer_board.place(@computer_submarine, sample)
   end
 
   def user_ship_placement
-    # require "pry"; binding.pry
+    user_instructions
+    render_user_board_and_instructions_cruiser
+    generate_random_coordinates_user_cruiser
+    render_user_board_and_instructions_submarine
+    generate_random_coordinates_user_submarine
+  end
+
+  def generate_random_coordinates_computer(ship)
+    if ship.name == @computer_cruiser.name || ship.name == @user_cruiser.name
+      @computer_board.cells.keys.sample(3)
+    else
+      @computer_board.cells.keys.sample(2)
+    end
+  end
+
+  def user_instructions
+    puts "#{"-" * 60}"
     puts "I have laid out my ships on the grid."
     puts "You now need to lay out your two ships."
     puts "The Cruiser is three units long and the Submarine is two units long.\n"
     puts "Keep in mind ships cannot be placed diagonally"
+    puts "#{"-" * 60}"
+  end
+
+  def render_user_board_and_instructions_cruiser
     puts @user_board.render(true)
     puts "Enter the coordinates for the Cruiser (3 spaces):"
+  end
+
+  def render_user_board_and_instructions_submarine
+    puts @user_board.render(true)
+    puts "Enter the coordinates for the Submarine (2 spaces):"
+  end
+
+  def generate_random_coordinates_user_cruiser
     user_coordinates = gets.chomp.upcase.split(" ")
     until @user_board.valid_placement?(@user_cruiser, user_coordinates)
       puts "These coordinates are invalid, please try again"
-
       user_coordinates = gets.chomp.upcase.split(" ")
     end
-    @user_board.place(@user_cruiser, @user_coordinates)
-    puts @user_board.render(true)
-    puts "Enter the coordinates for the Submarine (2 spaces):"
+    @user_board.place(@user_cruiser, user_coordinates)
+  end
+
+  def generate_random_coordinates_user_submarine
     user_coordinates = gets.chomp.upcase.split(" ")
     until @user_board.valid_placement?(@user_submarine, user_coordinates)
       puts "These coordinates are invalid, please try again"
       user_coordinates = gets.chomp.upcase.split(" ")
     end
     @user_board.place(@user_submarine, user_coordinates)
-  end
-
-  def generate_random_coordinates(ship)
-    # require "pry"; binding.pry
-    if ship.name == @computer_cruiser.name || ship.name == @user_cruiser.name
-      @all_coordinates.sample(3)
-    else
-      @all_coordinates.sample(2)
-
-    end
-  end
-
-  def computer_ship_placement
-    until @computer_board.valid_placement?(@computer_cruiser, generate_random_coordinates(@computer_cruiser))
-      sample = generate_random_coordinates(@computer_cruiser)
-    end
-    @computer_board.place(@computer_cruiser, sample)
-
-    until @computer_board.valid_placement?(@computer_submarine, generate_random_coordinates(@computer_submarine))
-      sample = generate_random_coordinates(@computer_submarine)
-    end
-    @computer_board.place(@computer_submarine, sample)
   end
 end
