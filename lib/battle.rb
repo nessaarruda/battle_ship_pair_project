@@ -40,6 +40,7 @@ class Battle
   def start_game
     computer_ship_placement
     user_ship_placement
+    display_board
   end
 
   def computer_ship_placement
@@ -103,6 +104,30 @@ class Battle
       puts "These coordinates are invalid, please try again"
       user_coordinates = gets.chomp.upcase.split(" ")
     end
+    require "pry"; binding.pry
+
     @user_board.place(@user_submarine, user_coordinates)
+  end
+
+  def display_board
+      puts "=============COMPUTER BOARD============="
+      puts @computer_board.render
+      puts "=============USER BOARD============="
+      puts @user_board.render(true)
+  end
+
+  def user_hit
+    puts "Choose the coordinate for your shot"
+    user_hit = gets.chomp.upcase
+    until @computer_board.valid_coordinate?(user_hit)
+      if @computer_board.cells[user_hit].fired_upon?
+      puts "You've already chosen this coordinate #{user_hit.upcase}, please try again"
+      user_hit = gets.chomp.upcase
+    else
+      puts "The coordinate #{user_hit} is not valid, please try again"
+      user_hit = gets.chomp.upcase
+    end
+    @computer_board.cells[user_hit].fire_upon
+    end
   end
 end
