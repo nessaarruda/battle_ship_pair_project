@@ -5,6 +5,7 @@ class Cell
     @coordinate = coordinate
     @ship = ship
     @fired_upon = false
+    @hit = 0
   end
 
   def empty?
@@ -20,10 +21,9 @@ class Cell
   end
 
   def fire_upon
-    if empty? == false
-      @ship.hit
-    end
+    @ship.hit if empty? == false
     @fired_upon = true
+    @hit += 1
   end
 
   def render(reveal_ship = false)
