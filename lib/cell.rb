@@ -26,7 +26,7 @@ class Cell
     @hit += 1
   end
 
-  def render(reveal_ship = false)
+  def render(reveal_ship = nil)
     if fired_upon? && empty?
       "M"
     elsif fired_upon? && empty? == false && ship.sunk?
