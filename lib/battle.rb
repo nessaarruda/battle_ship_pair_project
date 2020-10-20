@@ -40,6 +40,26 @@ class Battle
   def start_game
     computer_ship_placement
     user_ship_placement
+    until end_game?
+    display_board
+    user_hit
+    computer_hit
+
+    end
+    win_game
+    self.go_to_battle
+  end
+
+  def win_game
+    if @computer_cruiser.sunk? && @computer_submarine.sunk?
+      puts "You won!"
+    elsif @user_submarine.sunk? && @user_submarine.sunk?
+      puts "I won!"
+    end
+  end
+
+  def end_game?
+    @computer_cruiser.sunk? && @computer_submarine.sunk? || @user_submarine.sunk? && @user_submarine.sunk?
   end
 
   def computer_ship_placement
@@ -56,13 +76,13 @@ class Battle
   def user_ship_placement
     user_instructions
     render_user_board_and_instructions_cruiser
-    generate_random_coordinates_user_cruiser
+    get_user_coordinates_cruiser
     render_user_board_and_instructions_submarine
-    generate_random_coordinates_user_submarine
+    get_user_coordinates_submarine
   end
 
   def generate_random_coordinates_computer(ship)
-    if ship.name == @computer_cruiser.name || ship.name == @user_cruiser.name
+    if ship.name == @computer_cruiser.name
       @computer_board.cells.keys.sample(3)
     else
       @computer_board.cells.keys.sample(2)
@@ -88,7 +108,7 @@ class Battle
     puts "Enter the coordinates for the Submarine (2 spaces):"
   end
 
-  def generate_random_coordinates_user_cruiser
+  def get_user_coordinates_cruiser
     user_coordinates = gets.chomp.upcase.split(" ")
     until @user_board.valid_placement?(@user_cruiser, user_coordinates)
       puts "These coordinates are invalid, please try again"
@@ -97,12 +117,65 @@ class Battle
     @user_board.place(@user_cruiser, user_coordinates)
   end
 
-  def generate_random_coordinates_user_submarine
+  def get_user_coordinates_submarine
     user_coordinates = gets.chomp.upcase.split(" ")
     until @user_board.valid_placement?(@user_submarine, user_coordinates)
       puts "These coordinates are invalid, please try again"
       user_coordinates = gets.chomp.upcase.split(" ")
     end
+    # require "pry"; binding.pry
+
     @user_board.place(@user_submarine, user_coordinates)
+  end
+
+  def display_board
+      puts "=============COMPUTER BOARD============="
+      puts @computer_board.render
+      puts "=============USER BOARD============="
+      puts @user_board.render(true)
+  end
+
+  def user_hit
+    puts "Choose the coordinate for your shot"
+    user_hit = gets.chomp.upcase
+    until @computer_board.valid_coordinate?(user_hit)
+      if @computer_board.cells[user_hit].fired_upon?
+      puts "You've already chosen this coordinate #{user_hit.upcase}, please try again"
+      user_hit = gets.chomp.upcase
+    else
+      puts "The coordinate #{user_hit} is not valid, please try again"
+      user_hit = gets.chomp.upcase
+    end
+    @computer_board.cells[user_hit].fire_upon
+    hit_or_miss_user?(@computer_board.cells[user_hit])
+    end
+  end
+  def computer_hit
+    computer_shot = @user_board.cells.keys.shuffle[0]
+    until @user_board.valid_coordinate?(computer_shot)
+      computer_shot = @user_board.cells.keys.shuffle[0]
+    end
+    @user_board.cells[computer_shot].fire_upon
+    hit_or_miss_computer?(@user_board.cells[computer_shot])
+  end
+
+  def hit_or_miss_user?(cell)
+    if cell.render == "M"
+      puts "Your shot on #{cell.coordinate} was a miss."
+    elsif cell.render == "H"
+      puts "Your shot on #{cell.coordinate} was a hit"
+    elsif cell.render == "X"
+      puts "You sunk my ship"
+    end
+  end
+
+  def hit_or_miss_computer?(cell)
+    if cell.render == "M"
+      puts "My shot on #{cell.coordinate} was a miss."
+    elsif cell.render == "H"
+      puts "My shot on #{cell.coordinate} was a hit"
+    elsif cell.render == "X"
+      puts "I sunk your ship"
+    end
   end
 end
