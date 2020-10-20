@@ -62,14 +62,8 @@ class Battle
   end
 
   def computer_ship_placement
-    until @computer_board.valid_placement?(@computer_cruiser, generate_random_coordinates_computer(@computer_cruiser))
-      sample = generate_random_coordinates_computer(@computer_cruiser)
-    end
-    @computer_board.place(@computer_cruiser, sample)
-    until @computer_board.valid_placement?(@computer_submarine, generate_random_coordinates_computer(@computer_submarine))
-      sample = generate_random_coordinates_computer(@computer_submarine)
-    end
-    @computer_board.place(@computer_submarine, sample)
+    place_computer_ships_cruiser
+    place_computer_ships_submarine
   end
 
   def user_ship_placement
@@ -86,6 +80,22 @@ class Battle
     else
       @computer_board.cells.keys.sample(2)
     end
+  end
+
+  def place_computer_ships_cruiser
+    sample = generate_random_coordinates_computer(@computer_cruiser)
+    until @computer_board.valid_placement?(@computer_cruiser, sample)
+      sample = generate_random_coordinates_computer(@computer_cruiser)
+    end
+    @computer_board.place(@computer_cruiser, sample)
+  end
+
+  def place_computer_ships_submarine
+    sample = generate_random_coordinates_computer(@computer_submarine)
+    until @computer_board.valid_placement?(@computer_submarine, sample)
+      sample = generate_random_coordinates_computer(@computer_submarine)
+    end
+    @computer_board.place(@computer_submarine, sample)
   end
 
   def user_instructions
@@ -129,23 +139,23 @@ class Battle
     puts '=============COMPUTER BOARD============='
     puts @computer_board.render(true)
     puts '===============USER BOARD==============='
-    puts @user_board.render
+    puts @user_board.render(true)
     puts ('-' * 40).to_s
   end
 
   def user_hit
     puts 'Choose the coordinate for your shot'
     user_hit = gets.chomp.upcase
-    until @computer_board.valid_coordinate?(user_hit)
-      if @computer_board.cells[user_hit].fired_upon?
-        puts "You've already chosen this coordinate #{user_hit.upcase}, please try again"
-        user_hit = gets.chomp.upcase
-      else
-        puts "The coordinate #{user_hit} is not valid, please try again"
-        user_hit = gets.chomp.upcase
-      end
+    if @computer_board.valid_coordinate?(user_hit) && !@computer_board.cells[user_hit].fired_upon?
+      # require "pry"; binding.pry
       @computer_board.cells[user_hit].fire_upon
       hit_or_miss_user?(@computer_board.cells[user_hit])
+    elsif @computer_board.valid_coordinate?(user_hit) && @computer_board.cells[user_hit].fired_upon?
+      puts "You've already chosen this coordinate #{user_hit.upcase}, please try again"
+      user_hit = gets.chomp.upcase
+    else
+      puts "The coordinate #{user_hit} is not valid, please try again"
+      user_hit = gets.chomp.upcase
     end
   end
 
