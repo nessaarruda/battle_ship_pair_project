@@ -147,16 +147,16 @@ class Battle
 
   def user_hit
     puts 'Choose the coordinate for your shot'
-    user_hit = gets.chomp.upcase
-    if @computer_board.valid_coordinate?(user_hit) && !@computer_board.cells[user_hit].fired_upon?
-      @computer_board.cells[user_hit].fire_upon
-      hit_or_miss_user?(@computer_board.cells[user_hit])
-    elsif @computer_board.valid_coordinate?(user_hit) && @computer_board.cells[user_hit].fired_upon?
-      puts "You've already chosen this coordinate #{user_hit.upcase}, please try again"
-      user_hit = gets.chomp.upcase
+    user_choice = gets.chomp.upcase
+    if @computer_board.valid_coordinate?(user_choice) && !@computer_board.cells[user_choice].fired_upon?
+      @computer_board.cells[user_choice].fire_upon
+      hit_or_miss_user?(@computer_board.cells[user_choice])
+    elsif @computer_board.valid_coordinate?(user_choice) && @computer_board.cells[user_choice].fired_upon?
+      puts "You've already chosen this coordinate #{user_choice.upcase}, please try again"
+      user_hit
     else
-      puts "The coordinate #{user_hit} is not valid, please try again"
-      user_hit = gets.chomp.upcase
+      puts "The coordinate #{user_choice} is not valid, please try again"
+      user_hit
     end
   end
 
@@ -171,7 +171,7 @@ class Battle
 
   def hit_or_miss_user?(cell)
     if cell.render == 'M'
-      p "Your shot on #{cell.coordinate} was a miss."
+      puts "Your shot on #{cell.coordinate} was a miss."
     elsif cell.render == 'H'
       puts "Your shot on #{cell.coordinate} was a hit"
     elsif cell.render == 'X'
