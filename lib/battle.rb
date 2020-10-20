@@ -52,8 +52,10 @@ class Battle
   def win_game
     if @computer_cruiser.sunk? && @computer_submarine.sunk?
       puts 'You won!'
+      puts @computer_board.render
     elsif @user_submarine.sunk? && @user_submarine.sunk?
       puts 'I won!'
+      puts @user_board.render(true)
     end
   end
 
@@ -137,7 +139,7 @@ class Battle
 
   def display_board
     puts '=============COMPUTER BOARD============='
-    puts @computer_board.render(true)
+    puts @computer_board.render
     puts '===============USER BOARD==============='
     puts @user_board.render(true)
     puts ('-' * 40).to_s
@@ -147,7 +149,6 @@ class Battle
     puts 'Choose the coordinate for your shot'
     user_hit = gets.chomp.upcase
     if @computer_board.valid_coordinate?(user_hit) && !@computer_board.cells[user_hit].fired_upon?
-      # require "pry"; binding.pry
       @computer_board.cells[user_hit].fire_upon
       hit_or_miss_user?(@computer_board.cells[user_hit])
     elsif @computer_board.valid_coordinate?(user_hit) && @computer_board.cells[user_hit].fired_upon?
