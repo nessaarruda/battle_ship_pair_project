@@ -1,14 +1,14 @@
-require './lib/board'
-require './lib/ship'
-require './lib/cell'
+require "./lib/board"
+require "./lib/ship"
+require "./lib/cell"
 
 class Battle
-  attr_reader :user_board,
-              :user_cruiser,
-              :user_submarine,
-              :computer_board,
-              :computer_cruiser,
-              :computer_submarine
+  attr_reader   :user_board,
+                :user_cruiser,
+                :user_submarine,
+                :computer_board,
+                :computer_cruiser,
+                :computer_submarine
 
   def initialize
     @user_board         = Board.new

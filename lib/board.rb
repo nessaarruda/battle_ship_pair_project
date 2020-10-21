@@ -89,6 +89,7 @@ class Board
     "C #{@cells["C1"].render(true)} #{@cells["C2"].render(true)} #{@cells["C3"].render(true)} #{@cells["C4"].render(true)} \n" +
     "D #{@cells["D1"].render(true)} #{@cells["D2"].render(true)} #{@cells["D3"].render(true)} #{@cells["D4"].render(true)} \n"
   end
+
   def render_computer_board
     "  1 2 3 4 \n" +
     "A #{@cells["A1"].render} #{@cells["A2"].render} #{@cells["A3"].render} #{@cells["A4"].render} \n" +
@@ -96,12 +97,12 @@ class Board
     "C #{@cells["C1"].render} #{@cells["C2"].render} #{@cells["C3"].render} #{@cells["C4"].render} \n" +
     "D #{@cells["D1"].render} #{@cells["D2"].render} #{@cells["D3"].render} #{@cells["D4"].render} \n"
   end
-
+  
   def render(reveal_ship = nil)
     if reveal_ship == true
       render_user_board
     else
       render_computer_board
-    end 
+    end
   end
 end
