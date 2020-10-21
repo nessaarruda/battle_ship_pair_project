@@ -41,6 +41,7 @@ class Battle
       computer_hit
     end
     win_game
+    puts '=============REMATCH?============='
     go_to_battle
   end
 
@@ -53,11 +54,9 @@ class Battle
     if @computer_cruiser.sunk? && @computer_submarine.sunk?
       puts 'You won!'
       puts @computer_board.render
-      puts '=============REMATCH?============='
     elsif @user_submarine.sunk? && @user_submarine.sunk?
       puts 'I won!'
       puts @user_board.render(true)
-      puts '=============REMATCH?============='
     end
   end
 
@@ -112,7 +111,7 @@ class Battle
   end
 
   def render_user_board_and_instructions_cruiser
-    puts @user_board.render(true)
+    puts @user_board.render
     puts 'Enter the coordinates for the Cruiser (3 spaces):'
   end
 
@@ -125,6 +124,7 @@ class Battle
     user_coordinates = gets.chomp.upcase.split(' ')
     until @user_board.valid_placement?(@user_cruiser, user_coordinates)
       puts 'These coordinates are invalid, please try again'
+      puts 'Please ensure you enter 3 coordinates'
       user_coordinates = gets.chomp.upcase.split(' ')
     end
     @user_board.place(@user_cruiser, user_coordinates)
@@ -134,6 +134,7 @@ class Battle
     user_coordinates = gets.chomp.upcase.split(' ')
     until @user_board.valid_placement?(@user_submarine, user_coordinates)
       puts 'These coordinates are invalid, please try again'
+      puts 'Please ensure you enter 2 coordinates'
       user_coordinates = gets.chomp.upcase.split(' ')
     end
     @user_board.place(@user_submarine, user_coordinates)
@@ -164,7 +165,7 @@ class Battle
 
   def computer_hit
     computer_shot = @user_board.cells.keys.shuffle[0]
-    until @user_board.valid_coordinate?(computer_shot)
+    until @user_board.valid_coordinate?(computer_shot) && !@computer_board.cells[computer_shot].fired_upon?
       computer_shot = @user_board.cells.keys.shuffle[0]
     end
     @user_board.cells[computer_shot].fire_upon
@@ -177,7 +178,7 @@ class Battle
     elsif cell.render == 'H'
       puts "Your shot on #{cell.coordinate} was a hit"
     elsif cell.render == 'X'
-      puts 'You sunk my ship'
+      puts "Your shot on #{cell.coordinate} sunk my ship"
     end
   end
 
@@ -187,7 +188,7 @@ class Battle
     elsif cell.render == 'H'
       puts "My shot on #{cell.coordinate} was a hit"
     elsif cell.render == 'X'
-      puts 'I sunk your ship'
+      puts "My shot on #{cell.coordinate} sunk your ship"
     end
   end
 end
