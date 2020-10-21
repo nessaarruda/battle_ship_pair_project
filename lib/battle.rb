@@ -42,6 +42,7 @@ class Battle
     end
     win_game
     puts '=============REMATCH?============='
+    @user_board = Board.new
     go_to_battle
   end
 
@@ -112,13 +113,11 @@ class Battle
   end
 
   def render_user_board_and_instructions_cruiser
-    @user_board = Board.new
     puts @user_board.render(true)
     puts 'Enter the coordinates for the Cruiser (3 spaces):'
   end
 
   def render_user_board_and_instructions_submarine
-    @user_board = Board.new
     puts @user_board.render(true)
     puts 'Enter the coordinates for the Submarine (2 spaces):'
   end
@@ -168,7 +167,6 @@ class Battle
 
   def computer_hit
     computer_shot = @user_board.cells.keys.shuffle[0]
-
     until @user_board.cells[computer_shot].fired_upon? != true
       computer_shot = @user_board.cells.keys.shuffle[0]
     end
