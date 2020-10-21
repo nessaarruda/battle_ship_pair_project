@@ -54,14 +54,15 @@ class Battle
     if @computer_cruiser.sunk? && @computer_submarine.sunk?
       puts 'You won!'
       puts @computer_board.render
-    elsif @user_submarine.sunk? && @user_submarine.sunk?
+    elsif @user_cruiser.sunk? && @user_submarine.sunk?
       puts 'I won!'
       puts @user_board.render(true)
     end
   end
 
   def end_game?
-    @computer_cruiser.sunk? && @computer_submarine.sunk? || @user_submarine.sunk? && @user_submarine.sunk?
+    @computer_cruiser.sunk? && @computer_submarine.sunk? ||
+    @user_cruiser.sunk? && @user_submarine.sunk?
   end
 
   def computer_ship_placement
@@ -111,11 +112,13 @@ class Battle
   end
 
   def render_user_board_and_instructions_cruiser
-    puts @user_board.render
+    @user_board = Board.new
+    puts @user_board.render(true)
     puts 'Enter the coordinates for the Cruiser (3 spaces):'
   end
 
   def render_user_board_and_instructions_submarine
+    @user_board = Board.new
     puts @user_board.render(true)
     puts 'Enter the coordinates for the Submarine (2 spaces):'
   end
@@ -165,7 +168,8 @@ class Battle
 
   def computer_hit
     computer_shot = @user_board.cells.keys.shuffle[0]
-    until @user_board.valid_coordinate?(computer_shot) && !@computer_board.cells[computer_shot].fired_upon?
+
+    until @user_board.cells[computer_shot].fired_upon? != true
       computer_shot = @user_board.cells.keys.shuffle[0]
     end
     @user_board.cells[computer_shot].fire_upon
