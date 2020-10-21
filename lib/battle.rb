@@ -112,11 +112,13 @@ class Battle
   end
 
   def render_user_board_and_instructions_cruiser
+    @user_board = Board.new
     puts @user_board.render(true)
     puts 'Enter the coordinates for the Cruiser (3 spaces):'
   end
 
   def render_user_board_and_instructions_submarine
+    @user_board = Board.new
     puts @user_board.render(true)
     puts 'Enter the coordinates for the Submarine (2 spaces):'
   end
