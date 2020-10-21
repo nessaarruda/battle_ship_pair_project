@@ -32,9 +32,4 @@ class BattleTest < Minitest::Test
     ship = Ship.new("Submarine", 2)
     assert_equal 2, @battle.generate_random_coordinates_computer(ship).count
   end
-
-  def test_it_starts_the_game
-    assert_equal 3, @battle.start_game
-  end
-
 end
