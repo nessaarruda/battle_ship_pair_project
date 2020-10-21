@@ -38,7 +38,6 @@ class CellTest < Minitest::Test
     assert_equal "M", @cell_1.render
     @cell_2.place_ship(@cruiser)
     assert_equal ".", @cell_2.render
-# Indicate that we want to show a ship with the optional argument
     assert_equal "S", @cell_2.render(true)
     @cell_2.fire_upon
     assert_equal "H", @cell_2.render
