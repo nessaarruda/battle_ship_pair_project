@@ -53,9 +53,11 @@ class Battle
     if @computer_cruiser.sunk? && @computer_submarine.sunk?
       puts 'You won!'
       puts @computer_board.render
+      puts '=============REMATCH?============='
     elsif @user_submarine.sunk? && @user_submarine.sunk?
       puts 'I won!'
       puts @user_board.render(true)
+      puts '=============REMATCH?============='
     end
   end
 
